@@ -37,9 +37,23 @@ struct PopularDestinationsView: View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(0..<5, id: \.self) { num in
-                        Spacer()
-                        .frame(width: 125, height: 150)
-                        .background(Color.gray)
+                        
+                        VStack(alignment: .leading, spacing: 0) {
+                            Image("someImage")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 100, height: 100)
+                                .cornerRadius(4)
+                                .padding(.all, 6)
+                            Text("Paris")
+                                .font(.system(size: 12, weight: .semibold))
+                                .padding(.horizontal, 12)
+                            Text("France")
+                                .font(.system(size: 12, weight: .semibold))
+                                .padding(.horizontal, 12)
+                                .padding(.bottom, 8)
+                        }
+                        .background(Color(.init(white: 0.9, alpha: 1)))
                         .cornerRadius(5)
                         .shadow(color: .gray,radius: 4, x: 0, y: 2)
                         .padding(.bottom)
