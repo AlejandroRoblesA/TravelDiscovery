@@ -29,7 +29,7 @@ struct ContentView: View {
                                startPoint: .top,
                                endPoint: .center)
                     .ignoresSafeArea()
-                Color.white
+                Color(.init(white: 0.95, alpha: 1))
                     .offset(y: 400)
                 ScrollView {
                     DiscoverCategoriesView()
@@ -38,7 +38,7 @@ struct ContentView: View {
                         PopularRestaurantsView()
                         TrendingCreatorsView()
                     }
-                    .background(Color.white)
+                    .background(Color(.init(white: 0.95, alpha: 1)))
                     .cornerRadius(16)
                     .padding(.top, 32)
                 }
@@ -92,9 +92,9 @@ struct PopularDestinationsView: View {
                                 .padding(.bottom, 8)
                                 .foregroundColor(.gray)
                         }
-                        .background(Color(.init(white: 0.9, alpha: 1)))
+                        .background(Color.white)
                         .cornerRadius(5)
-                        .shadow(color: .gray,radius: 4, x: 0, y: 2)
+                        .shadow(color: .init(.sRGB, white: 0.8, opacity: 1),radius: 4, x: 0, y: 2)
                         .padding(.bottom)
                     }
                 }
@@ -154,9 +154,9 @@ struct PopularRestaurantsView: View {
                             Spacer()
                         }
                         .frame(width: 240)
-                        .background(Color(.init(white: 0.9, alpha: 1)))
+                        .background(Color.white)
                         .cornerRadius(5)
-                        .shadow(color: .gray,radius: 4, x: 0, y: 2)
+                        .shadow(color: .init(.sRGB, white: 0.8, opacity: 1),radius: 4, x: 0, y: 2)
                         .padding(.bottom)
                     }
                 }
