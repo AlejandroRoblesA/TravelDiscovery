@@ -21,17 +21,18 @@ struct ContentView: View {
     }
 }
 
-struct Destinations: Hashable {
+struct Destination: Hashable {
     let city, country, imageName: String
 }
 
 struct PopularDestinationsView: View {
     
-    let destinations: [Destinations] = [
-        .init(city: "Paris", country: "France", imageName: "tower"),
-        .init(city: "Tokyo", country: "Japan", imageName: "tokio"),
-        .init(city: "New York", country: "US", imageName: "york")
+    let destinations: [Destination] = [
+        .init(city: "Paris", country: "France", imageName: "eiffel_tower"),
+        .init(city: "Tokyo", country: "Japan", imageName: "japan"),
+        .init(city: "New York", country: "US", imageName: "new_york"),
     ]
+
     var body: some View {
         VStack {
             HStack {
@@ -52,7 +53,7 @@ struct PopularDestinationsView: View {
                             Image(destination.imageName)
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: 100, height: 100)
+                                .frame(width: 125, height: 125)
                                 .cornerRadius(4)
                                 .padding(.all, 6)
                             Text(destination.city)
