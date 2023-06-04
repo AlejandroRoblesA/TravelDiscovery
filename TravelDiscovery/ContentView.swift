@@ -8,15 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+    }
     var body: some View {
         NavigationView {
-            ScrollView {
-                DiscoverCategoriesView()
-                PopularDestinationsView()
-                PopularRestaurantsView()
-                TrendingCreatorsView()
+            ZStack {
+                LinearGradient(gradient:
+                                Gradient(colors:
+                                            [Color(UIColor(red: 253/255,
+                                                           green: 169/255,
+                                                           blue: 50/255,
+                                                           alpha: 1)),
+                                             Color(UIColor(red: 253/255,
+                                                           green: 130/255,
+                                                           blue: 48/255,
+                                                           alpha: 1))]),
+                               startPoint: .top,
+                               endPoint: .center)
+                    .ignoresSafeArea()
+                Color.white
+                    .offset(y: 400)
+                ScrollView {
+                    DiscoverCategoriesView()
+                    VStack {
+                        PopularDestinationsView()
+                        PopularRestaurantsView()
+                        TrendingCreatorsView()
+                    }
+                    .background(Color.white)
+                    .cornerRadius(16)
+                    .padding(.top, 32)
+                }
+                .navigationTitle("Discover")
             }
-            .navigationTitle("Discover")
         }
     }
 }
@@ -209,14 +236,14 @@ struct DiscoverCategoriesView: View {
                     VStack(spacing: 8) {
                         Image(systemName: category.imageName)
                             .font(.system(size: 20))
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.orange)
                             .frame(width: 64, height: 64)
-                            .background(Color.gray)
+                            .background(Color.white)
                             .cornerRadius(.infinity)
-                            .shadow(color: .gray, radius: 4, x: 0, y: 2)
                         Text(category.name)
                             .font(.system(size: 12, weight: .semibold))
                             .multilineTextAlignment(.center)
+                            .foregroundColor(.white)
                     }
                     .frame(width: 68)
                 }
