@@ -21,7 +21,17 @@ struct ContentView: View {
     }
 }
 
+struct Destinations: Hashable {
+    let city, country, imageName: String
+}
+
 struct PopularDestinationsView: View {
+    
+    let destinations: [Destinations] = [
+        .init(city: "Paris", country: "France", imageName: "tower"),
+        .init(city: "Tokyo", country: "Japan", imageName: "tokio"),
+        .init(city: "New York", country: "US", imageName: "york")
+    ]
     var body: some View {
         VStack {
             HStack {
@@ -36,22 +46,23 @@ struct PopularDestinationsView: View {
             
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
-                    ForEach(0..<5, id: \.self) { num in
+                    ForEach(destinations, id: \.self) { destination in
                         
                         VStack(alignment: .leading, spacing: 0) {
-                            Image("someImage")
+                            Image(destination.imageName)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 100, height: 100)
                                 .cornerRadius(4)
                                 .padding(.all, 6)
-                            Text("Paris")
+                            Text(destination.city)
                                 .font(.system(size: 12, weight: .semibold))
                                 .padding(.horizontal, 12)
-                            Text("France")
+                            Text(destination.country)
                                 .font(.system(size: 12, weight: .semibold))
                                 .padding(.horizontal, 12)
                                 .padding(.bottom, 8)
+                                .foregroundColor(.gray)
                         }
                         .background(Color(.init(white: 0.9, alpha: 1)))
                         .cornerRadius(5)
