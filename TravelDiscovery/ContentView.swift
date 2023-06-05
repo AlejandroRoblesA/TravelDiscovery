@@ -8,15 +8,53 @@
 import SwiftUI
 
 struct ContentView: View {
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+    }
     var body: some View {
         NavigationView {
-            ScrollView {
-                DiscoverCategoriesView()
-                PopularDestinationsView()
-                PopularRestaurantsView()
-                TrendingCreatorsView()
+            ZStack {
+                LinearGradient(gradient:
+                                Gradient(colors:
+                                            [Color(UIColor(red: 253/255,
+                                                           green: 169/255,
+                                                           blue: 50/255,
+                                                           alpha: 1)),
+                                             Color(UIColor(red: 253/255,
+                                                           green: 130/255,
+                                                           blue: 48/255,
+                                                           alpha: 1))]),
+                               startPoint: .top,
+                               endPoint: .center)
+                    .ignoresSafeArea()
+                Color(.init(white: 0.95, alpha: 1))
+                    .offset(y: 400)
+                ScrollView {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                        Text("Where do you want to go?")
+                        Spacer()
+                    }
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color(.init(white: 1, alpha: 0.3)))
+                    .cornerRadius(10)
+                    .padding(16)
+                    DiscoverCategoriesView()
+                    VStack {
+                        PopularDestinationsView()
+                        PopularRestaurantsView()
+                        TrendingCreatorsView()
+                    }
+                    .background(Color(.init(white: 0.95, alpha: 1)))
+                    .cornerRadius(16)
+                    .padding(.top, 32)
+                }
+                .navigationTitle("Discover")
             }
-            .navigationTitle("Discover")
         }
     }
 }
@@ -65,9 +103,9 @@ struct PopularDestinationsView: View {
                                 .padding(.bottom, 8)
                                 .foregroundColor(.gray)
                         }
-                        .background(Color(.init(white: 0.9, alpha: 1)))
+                        .background(Color.white)
                         .cornerRadius(5)
-                        .shadow(color: .gray,radius: 4, x: 0, y: 2)
+                        .shadow(color: .init(.sRGB, white: 0.8, opacity: 1),radius: 4, x: 0, y: 2)
                         .padding(.bottom)
                     }
                 }
@@ -127,9 +165,9 @@ struct PopularRestaurantsView: View {
                             Spacer()
                         }
                         .frame(width: 240)
-                        .background(Color(.init(white: 0.9, alpha: 1)))
+                        .background(Color.white)
                         .cornerRadius(5)
-                        .shadow(color: .gray,radius: 4, x: 0, y: 2)
+                        .shadow(color: .init(.sRGB, white: 0.8, opacity: 1),radius: 4, x: 0, y: 2)
                         .padding(.bottom)
                     }
                 }
@@ -209,14 +247,14 @@ struct DiscoverCategoriesView: View {
                     VStack(spacing: 8) {
                         Image(systemName: category.imageName)
                             .font(.system(size: 20))
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.orange)
                             .frame(width: 64, height: 64)
-                            .background(Color.gray)
+                            .background(Color.white)
                             .cornerRadius(.infinity)
-                            .shadow(color: .gray, radius: 4, x: 0, y: 2)
                         Text(category.name)
                             .font(.system(size: 12, weight: .semibold))
                             .multilineTextAlignment(.center)
+                            .foregroundColor(.white)
                     }
                     .frame(width: 68)
                 }
