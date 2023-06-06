@@ -10,7 +10,14 @@ import Kingfisher
 import SDWebImageSwiftUI
 
 struct CategoryDetailView: View {
-    @ObservedObject var vm = CategoryDetailsViewModel()
+    private let name: String
+    @ObservedObject private var vm: CategoryDetailsViewModel
+
+    init(name: String) {
+        self.name = name
+        self.vm = .init(name: name)
+    }
+
     var body: some View {
         if vm.isLoading {
             VStack {
@@ -43,7 +50,7 @@ struct CategoryDetailView: View {
                     }
                 }
             }
-            .navigationBarTitle("Category", displayMode: .inline)
+            .navigationBarTitle(name, displayMode: .inline)
         }
     }
 }
@@ -52,8 +59,8 @@ class CategoryDetailsViewModel: ObservableObject {
     @Published var isLoading = true
     @Published var places = [Place]()
     @Published var errorMessage = ""
-    init() {
-        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/category?name=art") else { return }
+    init(name: String) {
+        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/category?name=\(name.lowercased())") else { return }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             
@@ -73,6 +80,8 @@ class CategoryDetailsViewModel: ObservableObject {
 
 struct CategoryDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryDetailView()
+        NavigationView {
+            CategoryDetailView(name: "Sports")
+        }
     }
 }
