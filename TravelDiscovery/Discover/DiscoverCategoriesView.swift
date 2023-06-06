@@ -44,15 +44,28 @@ struct DiscoverCategoriesView: View {
     }
 }
 
+struct Place: Decodable, Hashable {
+    let name, thumbnail: String
+}
+
 class CategoryDetailsViewModel: ObservableObject {
     @Published var isLoading = true
-    @Published var places = [Int]()
+    @Published var places = [Place]()
     init() {
-        //network code will happen here
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.isLoading = false
-            self.places = [1,2,3,4,5,6,7]
-        }
+        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/category?name=art") else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                guard let data = data else { return }
+                do {
+                    self.places = try JSONDecoder().decode([Place].self, from: data)
+                } catch {
+                    
+                }
+                self.isLoading = false
+            }
+        }.resume()
     }
 }
 
@@ -88,12 +101,12 @@ struct CategoryDetailView: View {
             
         } else {
             ScrollView {
-                ForEach(vm.places, id: \.self) { _ in
+                ForEach(vm.places, id: \.self) { place in
                     VStack(alignment: .leading, spacing: 0) {
                         Image("art1")
                             .resizable()
                             .scaledToFill()
-                        Text("Demo")
+                        Text(place.name)
                             .font(.system(size: 12, weight: .semibold))
                             .padding()
                     }
@@ -108,9 +121,12 @@ struct CategoryDetailView: View {
 
 struct DiscoverCategoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        ZStack {
-            Color.orange
-            DiscoverCategoriesView()
+        NavigationView {
+            ZStack {
+                Color.orange
+                DiscoverCategoriesView()
+            }
         }
+        .previewLayout(PreviewLayout.sizeThatFits)
     }
 }
