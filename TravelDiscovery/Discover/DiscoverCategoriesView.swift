@@ -44,20 +44,35 @@ struct DiscoverCategoriesView: View {
     }
 }
 
+class CategoryDetailsViewModel: ObservableObject {
+    @Published var isLoading = true
+    init() {
+        //network code will happen here
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.isLoading = false
+        }
+    }
+}
+
 struct CategoryDetailView: View {
+    @ObservedObject var vm = CategoryDetailsViewModel()
     var body: some View {
-        ScrollView {
-            ForEach(0..<5, id: \.self) { _ in
-                VStack(alignment: .leading, spacing: 0) {
-                    Image("art1")
-                        .resizable()
-                        .scaledToFill()
-                    Text("Demo")
-                        .font(.system(size: 12, weight: .semibold))
-                        .padding()
+        if vm.isLoading {
+            Text("Currently Loading...")
+        } else {
+            ScrollView {
+                ForEach(0..<5, id: \.self) { _ in
+                    VStack(alignment: .leading, spacing: 0) {
+                        Image("art1")
+                            .resizable()
+                            .scaledToFill()
+                        Text("Demo")
+                            .font(.system(size: 12, weight: .semibold))
+                            .padding()
+                    }
+                    .asTile()
+                    .padding()
                 }
-                .asTile()
-                .padding()
             }
         }
     }
