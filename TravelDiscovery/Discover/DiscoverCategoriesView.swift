@@ -46,22 +46,49 @@ struct DiscoverCategoriesView: View {
 
 class CategoryDetailsViewModel: ObservableObject {
     @Published var isLoading = true
+    @Published var places = [Int]()
     init() {
         //network code will happen here
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.isLoading = false
+            self.places = [1,2,3,4,5,6,7]
         }
     }
+}
+
+struct ActivityIndicatorView: UIViewRepresentable {
+    typealias UIViewType = UIActivityIndicatorView
+    
+    func makeUIView(context: Context) -> UIActivityIndicatorView {
+        let aiv = UIActivityIndicatorView(style: .large)
+        aiv.startAnimating()
+        aiv.color = .white
+        return aiv
+    }
+    
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: Context) {
+    }
+    
+    
 }
 
 struct CategoryDetailView: View {
     @ObservedObject var vm = CategoryDetailsViewModel()
     var body: some View {
         if vm.isLoading {
-            Text("Currently Loading...")
+            VStack {
+                ActivityIndicatorView()
+                Text("Loading...")
+                    .foregroundColor(.white)
+                    .font(.system(size: 16, weight: .semibold))
+            }
+            .padding()
+            .background(Color.black)
+            .cornerRadius(8)
+            
         } else {
             ScrollView {
-                ForEach(0..<5, id: \.self) { _ in
+                ForEach(vm.places, id: \.self) { _ in
                     VStack(alignment: .leading, spacing: 0) {
                         Image("art1")
                             .resizable()
@@ -74,6 +101,7 @@ struct CategoryDetailView: View {
                     .padding()
                 }
             }
+            .navigationBarTitle("Category", displayMode: .inline)
         }
     }
 }
