@@ -19,22 +19,46 @@ struct DiscoverCategoriesView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(alignment: .top, spacing: 14) {
                 ForEach(categories, id: \.self) { category in
-                    VStack(spacing: 8) {
-                        Image(systemName: category.imageName)
-                            .font(.system(size: 20))
-                            .foregroundColor(Color.orange)
-                            .frame(width: 64, height: 64)
-                            .background(Color.white)
-                            .cornerRadius(.infinity)
-                        Text(category.name)
-                            .font(.system(size: 12, weight: .semibold))
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.white)
+                    NavigationLink {
+                        CategoryDetailView()
+                    } label: {
+                        VStack(spacing: 8) {
+                            Image(systemName: category.imageName)
+                                .font(.system(size: 20))
+                                .foregroundColor(Color.orange)
+                                .frame(width: 64, height: 64)
+                                .background(Color.white)
+                                .cornerRadius(.infinity)
+                            Text(category.name)
+                                .font(.system(size: 12, weight: .semibold))
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.white)
+                        }
+                        .frame(width: 68)
                     }
-                    .frame(width: 68)
+
                 }
             }
             .padding(.horizontal)
+        }
+    }
+}
+
+struct CategoryDetailView: View {
+    var body: some View {
+        ScrollView {
+            ForEach(0..<5, id: \.self) { _ in
+                VStack(alignment: .leading, spacing: 0) {
+                    Image("art1")
+                        .resizable()
+                        .scaledToFill()
+                    Text("Demo")
+                        .font(.system(size: 12, weight: .semibold))
+                        .padding()
+                }
+                .asTile()
+                .padding()
+            }
         }
     }
 }
