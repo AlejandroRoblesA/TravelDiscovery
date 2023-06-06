@@ -32,6 +32,14 @@ struct CategoryDetailView: View {
             
         } else {
             ZStack {
+                if !vm.errorMessage.isEmpty {
+                    VStack(spacing: 12) {
+                        Image(systemName: "xmark.octagon.fill")
+                            .font(.system(size: 64, weight: .semibold))
+                            .foregroundColor(.red)
+                        Text(vm.errorMessage)
+                    }
+                }
                 Text(vm.errorMessage)
                 ScrollView {
                     ForEach(vm.places, id: \.self) { place in
@@ -60,9 +68,20 @@ class CategoryDetailsViewModel: ObservableObject {
     @Published var places = [Place]()
     @Published var errorMessage = ""
     init(name: String) {
-        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/category?name=\(name.lowercased())") else { return }
+        let urlString = "https://travel.letsbuildthatapp.com/travel_discovery/category?name=\(name.lowercased())".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        guard let url = URL(string: urlString)
+        else {
+            self.isLoading = false
+            return
+        }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
+            
+            if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 400 {
+                self.isLoading = false
+                self.errorMessage = "Bad status: \(statusCode)"
+                return
+            }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 guard let data = data else { return }
