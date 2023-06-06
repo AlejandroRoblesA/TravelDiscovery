@@ -51,6 +51,7 @@ struct Place: Decodable, Hashable {
 class CategoryDetailsViewModel: ObservableObject {
     @Published var isLoading = true
     @Published var places = [Place]()
+    @Published var errorMessage = ""
     init() {
         guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/category?name=art") else { return }
         
@@ -61,7 +62,8 @@ class CategoryDetailsViewModel: ObservableObject {
                 do {
                     self.places = try JSONDecoder().decode([Place].self, from: data)
                 } catch {
-                    
+                    print("Failed to decode JSON: ", error)
+                    self.errorMessage = error.localizedDescription
                 }
                 self.isLoading = false
             }
@@ -100,18 +102,21 @@ struct CategoryDetailView: View {
             .cornerRadius(8)
             
         } else {
-            ScrollView {
-                ForEach(vm.places, id: \.self) { place in
-                    VStack(alignment: .leading, spacing: 0) {
-                        Image("art1")
-                            .resizable()
-                            .scaledToFill()
-                        Text(place.name)
-                            .font(.system(size: 12, weight: .semibold))
-                            .padding()
+            ZStack {
+                Text(vm.errorMessage)
+                ScrollView {
+                    ForEach(vm.places, id: \.self) { place in
+                        VStack(alignment: .leading, spacing: 0) {
+                            Image("art1")
+                                .resizable()
+                                .scaledToFill()
+                            Text(place.name)
+                                .font(.system(size: 12, weight: .semibold))
+                                .padding()
+                        }
+                        .asTile()
+                        .padding()
                     }
-                    .asTile()
-                    .padding()
                 }
             }
             .navigationBarTitle("Category", displayMode: .inline)
