@@ -20,7 +20,7 @@ struct DiscoverCategoriesView: View {
             HStack(alignment: .top, spacing: 14) {
                 ForEach(categories, id: \.self) { category in
                     NavigationLink {
-                        Text("Hello")
+                        CategoryDetailView()
                     } label: {
                         VStack(spacing: 8) {
                             Image(systemName: category.imageName)
