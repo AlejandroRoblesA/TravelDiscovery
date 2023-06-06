@@ -40,7 +40,6 @@ struct CategoryDetailView: View {
                         Text(vm.errorMessage)
                     }
                 }
-                Text(vm.errorMessage)
                 ScrollView {
                     ForEach(vm.places, id: \.self) { place in
                         VStack(alignment: .leading, spacing: 0) {
