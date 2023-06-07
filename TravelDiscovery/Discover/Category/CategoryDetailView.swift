@@ -75,14 +75,14 @@ class CategoryDetailsViewModel: ObservableObject {
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
-            
-            if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 400 {
-                self.isLoading = false
-                self.errorMessage = "Bad status: \(statusCode)"
-                return
-            }
-            
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                if let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 400 {
+                    self.isLoading = false
+                    self.errorMessage = "Bad status: \(statusCode)"
+                    return
+                }
+
                 guard let data = data else { return }
                 do {
                     self.places = try JSONDecoder().decode([Place].self, from: data)
