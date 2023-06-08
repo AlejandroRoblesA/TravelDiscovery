@@ -73,6 +73,7 @@ import MapKit
 struct PopularDestinationsDetailsView: View {
     let destination: Destination
     @State var region: MKCoordinateRegion
+    @State var isShowingAttractions = false
     
     init(destination: Destination) {
         self.destination = destination
@@ -109,6 +110,14 @@ struct PopularDestinationsDetailsView: View {
                 Text("Location")
                     .font(.system(size: 18, weight: .semibold))
                 Spacer()
+                Button(action: {
+                    isShowingAttractions.toggle()
+                }) {
+                    Text("\(isShowingAttractions ? "Hide" : "Show") Attractions")
+                        .font(.system(size: 12, weight: .semibold))
+                }
+                Toggle("", isOn: $isShowingAttractions)
+                    .labelsHidden()
             }
             .padding(.horizontal)
             Map(coordinateRegion: $region, annotationItems: attractions) { attraction in
@@ -119,7 +128,9 @@ struct PopularDestinationsDetailsView: View {
         .navigationBarTitle(destination.city, displayMode: .inline)
     }
     let attractions: [Attraction] = [
-        .init(name: "eiffel_tower", latitude: 48.859565, longitude: 2.353235)
+        .init(name: "eiffel_tower", latitude: 48.858605, longitude: 2.2946),
+        .init(name: "Champs-Elysees", latitude: 48.866867, longitude: 2.311780),
+        .init(name: "Louvre Museum", latitude: 48.860288, longitude: 2.337789)
     ]
 }
 
