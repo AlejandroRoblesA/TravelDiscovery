@@ -68,6 +68,20 @@ struct PopularDestinationTile: View {
     }
 }
 
+struct Container: UIViewControllerRepresentable {
+    
+    typealias UIViewControllerType = UIViewController
+    
+    func makeUIViewController(context: Context) -> UIViewController {
+        let viewController = UIViewController()
+        viewController.view.backgroundColor = .red
+        return viewController
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+    }
+}
+
 import MapKit
 
 struct PopularDestinationsDetailsView: View {
