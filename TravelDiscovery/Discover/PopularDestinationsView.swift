@@ -10,9 +10,9 @@ import SwiftUI
 struct PopularDestinationsView: View {
     
     let destinations: [Destination] = [
-        .init(city: "Paris", country: "France", imageName: "eiffel_tower"),
-        .init(city: "Tokyo", country: "Japan", imageName: "japan"),
-        .init(city: "New York", country: "US", imageName: "new_york"),
+        .init(city: "Paris", country: "France", imageName: "eiffel_tower", latitude: 48.859565, longitud: 2.353235),
+        .init(city: "Tokyo", country: "Japan", imageName: "japan", latitude: 35.67988, longitud: 139.7695),
+        .init(city: "New York", country: "US", imageName: "new_york", latitude: 40.71592, longitud: -74.0055),
     ]
 
     var body: some View {
@@ -71,8 +71,14 @@ struct PopularDestinationTile: View {
 import MapKit
 
 struct PopularDestinationsDetailsView: View {
-    @State var region = MKCoordinateRegion(center: .init(latitude: 48.859565, longitude: 2.353235), span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1))
     let destination: Destination
+    @State var region: MKCoordinateRegion
+    
+    init(destination: Destination) {
+        self.destination = destination
+        self.region = MKCoordinateRegion(center: .init(latitude: destination.latitude, longitude: destination.longitud), span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1))
+    }
+    
     var body: some View {
         ScrollView {
             Image(destination.imageName)
@@ -116,7 +122,7 @@ struct PopularDestinationsDetailsView: View {
 struct PopularDestinationsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            PopularDestinationsDetailsView(destination: .init(city: "Paris", country: "France", imageName: "eiffel_tower"))
+            PopularDestinationsDetailsView(destination: .init(city: "Paris", country: "France", imageName: "eiffel_tower", latitude: 48.859565, longitud: 2.353235))
         }
         PopularDestinationsView()
         DiscoverView()
