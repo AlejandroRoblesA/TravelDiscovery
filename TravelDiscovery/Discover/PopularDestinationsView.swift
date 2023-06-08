@@ -73,7 +73,7 @@ import MapKit
 struct PopularDestinationsDetailsView: View {
     let destination: Destination
     @State var region: MKCoordinateRegion
-    @State var isShowingAttractions = false
+    @State var isShowingAttractions = true
     
     init(destination: Destination) {
         self.destination = destination
@@ -121,7 +121,21 @@ struct PopularDestinationsDetailsView: View {
             }
             .padding(.horizontal)
             Map(coordinateRegion: $region, annotationItems: isShowingAttractions ? attractions : []) { attraction in
-                MapMarker(coordinate: .init(latitude: attraction.latitude, longitude: attraction.longitude), tint: .red)
+                MapAnnotation(coordinate: .init(latitude: attraction.latitude, longitude: attraction.longitude)) {
+                    VStack {
+                        Image("eiffel_tower")
+                            .resizable()
+                            .frame(width: 80, height: 60)
+                            .cornerRadius(4)
+                        Text(attraction.name)
+                            .font(.system(size: 12, weight: .semibold))
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 4)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing))
+                            .foregroundColor(.white)
+                    }
+                    .shadow(radius: 5)
+                }
             }
             .frame(height: 300)
         }
