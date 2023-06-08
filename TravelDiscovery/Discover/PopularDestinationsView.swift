@@ -122,19 +122,7 @@ struct PopularDestinationsDetailsView: View {
             .padding(.horizontal)
             Map(coordinateRegion: $region, annotationItems: isShowingAttractions ? attractions : []) { attraction in
                 MapAnnotation(coordinate: .init(latitude: attraction.latitude, longitude: attraction.longitude)) {
-                    VStack {
-                        Image("eiffel_tower")
-                            .resizable()
-                            .frame(width: 80, height: 60)
-                            .cornerRadius(4)
-                        Text(attraction.name)
-                            .font(.system(size: 12, weight: .semibold))
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 4)
-                            .background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing))
-                            .foregroundColor(.white)
-                    }
-                    .shadow(radius: 5)
+                    CustomMapAnnotation(attraction: attraction)
                 }
             }
             .frame(height: 300)
@@ -142,15 +130,43 @@ struct PopularDestinationsDetailsView: View {
         .navigationBarTitle(destination.city, displayMode: .inline)
     }
     let attractions: [Attraction] = [
-        .init(name: "eiffel_tower", latitude: 48.858605, longitude: 2.2946),
-        .init(name: "Champs-Elysees", latitude: 48.866867, longitude: 2.311780),
-        .init(name: "Louvre Museum", latitude: 48.860288, longitude: 2.337789)
+        .init(name: "eiffel_tower", imageName: "eiffel_tower", latitude: 48.858605, longitude: 2.2946),
+        .init(name: "Champs-Elysees", imageName: "new_york", latitude: 48.866867, longitude: 2.311780),
+        .init(name: "Louvre Museum", imageName: "art2", latitude: 48.860288, longitude: 2.337789)
     ]
+}
+
+struct CustomMapAnnotation: View {
+    let attraction: Attraction
+    var body: some View {
+        VStack {
+            Image(attraction.imageName)
+                .resizable()
+                .frame(width: 80, height: 60)
+                .cornerRadius(4)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color(.init(white: 0, alpha: 0.5)))
+                )
+            Text(attraction.name)
+                .font(.system(size: 12, weight: .semibold))
+                .padding(.horizontal, 6)
+                .padding(.vertical, 4)
+                .background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .leading, endPoint: .trailing))
+            .foregroundColor(.white)
+            .cornerRadius(4)
+            .overlay(
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color(.init(white: 0, alpha: 0.5)))
+            )
+        }
+        .shadow(radius: 5)
+    }
 }
 
 struct Attraction: Identifiable {
     let id = UUID().uuidString
-    let name: String
+    let name, imageName: String
     let latitude, longitude: Double
 }
 
