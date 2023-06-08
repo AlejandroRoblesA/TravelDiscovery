@@ -77,7 +77,7 @@ struct PopularDestinationsDetailsView: View {
     
     init(destination: Destination) {
         self.destination = destination
-        self.region = MKCoordinateRegion(center: .init(latitude: destination.latitude, longitude: destination.longitude), span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1))
+        self.region = MKCoordinateRegion(center: .init(latitude: destination.latitude, longitude: destination.longitude), span: .init(latitudeDelta: 0.07, longitudeDelta: 0.07))
     }
     
     var body: some View {
@@ -120,7 +120,7 @@ struct PopularDestinationsDetailsView: View {
                     .labelsHidden()
             }
             .padding(.horizontal)
-            Map(coordinateRegion: $region, annotationItems: attractions) { attraction in
+            Map(coordinateRegion: $region, annotationItems: isShowingAttractions ? attractions : []) { attraction in
                 MapMarker(coordinate: .init(latitude: attraction.latitude, longitude: attraction.longitude), tint: .red)
             }
             .frame(height: 300)
