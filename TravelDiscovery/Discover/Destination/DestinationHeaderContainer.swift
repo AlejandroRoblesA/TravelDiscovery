@@ -10,9 +10,10 @@ import SwiftUI
 struct DestinationHeaderContainer: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = UIViewController
+    let imageNames: [String]
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let pageViewController = CustomPageViewController()
+        let pageViewController = CustomPageViewController(imageNames: imageNames)
         return pageViewController
     }
 
@@ -41,19 +42,26 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         if index == allControllers.count - 1 { return nil }
         return allControllers[index + 1]
     }
-    
-    
-    let firstVC = UIHostingController(rootView: Text("First View Controller"))
-    let secondVC = UIHostingController(rootView: Text("Second View Controller"))
-    let thirdVC = UIHostingController(rootView: Text("Third View Controller"))
-    lazy var allControllers: [UIViewController] = [firstVC, secondVC, thirdVC]
-    init() {
+
+    lazy var allControllers: [UIViewController] = []
+    init(imageNames: [String]) {
         
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .red
         
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        setViewControllers([firstVC], direction: .forward, animated: true)
+        allControllers = imageNames.map({ imageName in
+            let hostingController =
+            UIHostingController(rootView:
+                Image(imageName)
+                .resizable()
+                .scaledToFill()
+            )
+            hostingController.view.clipsToBounds = true
+            return hostingController
+            
+        })
+        setViewControllers([allControllers.first!], direction: .forward, animated: true)
         
         self.dataSource = self
         self.delegate = self
@@ -66,6 +74,6 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
 
 struct DestinationHeaderContainer_Previews: PreviewProvider {
     static var previews: some View {
-        DestinationHeaderContainer()
+        DestinationHeaderContainer(imageNames: ["eiffel_tower", "art1", "art2"])
     }
 }
