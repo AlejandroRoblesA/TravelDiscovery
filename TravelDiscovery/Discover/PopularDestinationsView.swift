@@ -70,7 +70,33 @@ struct PopularDestinationTile: View {
 
 import MapKit
 
+struct DestinationDetails: Decodable {
+    let description: String
+    let photos: [String]
+}
+
+
+class DestinationDetailsViewModel: ObservableObject {
+    @Published var isLoading = true
+    
+    init() {
+        let name = "paris"
+        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/destination?name=\(name)") else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            // make sure to check your error and response
+            guard let data = data else { return }
+            do {
+                let details = try JSONDecoder().decode(DestinationDetails.self, from: data)
+                print(details.photos)
+            } catch {
+                print("Failed to decode JSON", error)
+            }
+        }.resume()
+    }
+}
+
 struct PopularDestinationsDetailsView: View {
+    @ObservedObject var vm = DestinationDetailsViewModel()
     let destination: Destination
     @State var region: MKCoordinateRegion
     @State var isShowingAttractions = true
