@@ -41,19 +41,25 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         if index == allControllers.count - 1 { return nil }
         return allControllers[index + 1]
     }
-    
-    
-    let firstVC = UIHostingController(rootView: Text("First View Controller"))
-    let secondVC = UIHostingController(rootView: Text("Second View Controller"))
-    let thirdVC = UIHostingController(rootView: Text("Third View Controller"))
-    lazy var allControllers: [UIViewController] = [firstVC, secondVC, thirdVC]
+
+    lazy var allControllers: [UIViewController] = []
     init() {
         
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .red
         
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        setViewControllers([firstVC], direction: .forward, animated: true)
+        allControllers = ["eiffel_tower", "art1", "art2"].map({ imageName in
+            let hostingController =
+            UIHostingController(rootView:
+                Image(imageName)
+                .resizable()
+                .scaledToFill()
+            )
+            return hostingController
+            
+        })
+        setViewControllers([allControllers.first!], direction: .forward, animated: true)
         
         self.dataSource = self
         self.delegate = self
