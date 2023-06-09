@@ -12,12 +12,22 @@ struct DestinationHeaderContainer: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIViewController
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .red
-        return viewController
+        let pageViewController = CustomPageViewController()
+        return pageViewController
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+    }
+}
+
+class CustomPageViewController: UIPageViewController {
+    init() {
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        view.backgroundColor = .blue
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
