@@ -10,9 +10,10 @@ import SwiftUI
 struct DestinationHeaderContainer: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = UIViewController
+    let imageNames: [String]
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let pageViewController = CustomPageViewController()
+        let pageViewController = CustomPageViewController(imageNames: imageNames)
         return pageViewController
     }
 
@@ -43,19 +44,20 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     }
 
     lazy var allControllers: [UIViewController] = []
-    init() {
+    init(imageNames: [String]) {
         
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .red
         
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        allControllers = ["eiffel_tower", "art1", "art2"].map({ imageName in
+        allControllers = imageNames.map({ imageName in
             let hostingController =
             UIHostingController(rootView:
                 Image(imageName)
                 .resizable()
                 .scaledToFill()
             )
+            hostingController.view.clipsToBounds = true
             return hostingController
             
         })
@@ -72,6 +74,6 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
 
 struct DestinationHeaderContainer_Previews: PreviewProvider {
     static var previews: some View {
-        DestinationHeaderContainer()
+        DestinationHeaderContainer(imageNames: ["eiffel_tower", "art1", "art2"])
     }
 }
