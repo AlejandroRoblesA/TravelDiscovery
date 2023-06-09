@@ -21,6 +21,8 @@ struct DestinationHeaderContainer: UIViewControllerRepresentable {
     }
 }
 
+import Kingfisher
+
 class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
@@ -53,7 +55,7 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         allControllers = imageNames.map({ imageName in
             let hostingController =
             UIHostingController(rootView:
-                Image(imageName)
+                KFImage(URL(string: imageName))
                 .resizable()
                 .scaledToFill()
             )
@@ -73,7 +75,13 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
 }
 
 struct DestinationHeaderContainer_Previews: PreviewProvider {
+    static let imagesURLString = [
+        "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/2240d474-2237-4cd3-9919-562cd1bb439e",
+        "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/b1642068-5624-41cf-83f1-3f6dff8c1702",
+        "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/6982cc9d-3104-4a54-98d7-45ee5d117531"
+    ]
     static var previews: some View {
-        DestinationHeaderContainer(imageNames: ["eiffel_tower", "art1", "art2"])
+        DestinationHeaderContainer(imageNames: imagesURLString)
+            .frame(height: 300)
     }
 }
