@@ -10,16 +10,18 @@ import SwiftUI
 struct DestinationHeaderContainer: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = UIViewController
-    let imageNames: [String]
+    let imageURLString: [String]
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let pageViewController = CustomPageViewController(imageNames: imageNames)
+        let pageViewController = CustomPageViewController(imageURLString: imageURLString)
         return pageViewController
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
     }
 }
+
+import Kingfisher
 
 class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
@@ -44,16 +46,16 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     }
 
     lazy var allControllers: [UIViewController] = []
-    init(imageNames: [String]) {
+    init(imageURLString: [String]) {
         
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .red
         
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        allControllers = imageNames.map({ imageName in
+        allControllers = imageURLString.map({ imageName in
             let hostingController =
             UIHostingController(rootView:
-                Image(imageName)
+                KFImage(URL(string: imageName))
                 .resizable()
                 .scaledToFill()
             )
@@ -73,7 +75,13 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
 }
 
 struct DestinationHeaderContainer_Previews: PreviewProvider {
+    static let imagesURLString = [
+        "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/2240d474-2237-4cd3-9919-562cd1bb439e",
+        "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/b1642068-5624-41cf-83f1-3f6dff8c1702",
+        "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/6982cc9d-3104-4a54-98d7-45ee5d117531"
+    ]
     static var previews: some View {
-        DestinationHeaderContainer(imageNames: ["eiffel_tower", "art1", "art2"])
+        DestinationHeaderContainer(imageURLString: imagesURLString)
+            .frame(height: 300)
     }
 }
