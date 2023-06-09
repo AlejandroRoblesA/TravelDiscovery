@@ -20,10 +20,30 @@ struct DestinationHeaderContainer: UIViewControllerRepresentable {
     }
 }
 
-class CustomPageViewController: UIPageViewController {
+class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let index = allControllers.firstIndex(of: viewController) else { return nil }
+        if index == 0 { return nil }
+        return allControllers[index - 1]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let index = allControllers.firstIndex(of: viewController) else { return nil }
+        if index == allControllers.count - 1 { return nil }
+        return allControllers[index + 1]
+    }
+    
+    
+    let firstVC = UIHostingController(rootView: Text("First View Controller"))
+    let secondVC = UIHostingController(rootView: Text("Second View Controller"))
+    let thirdVC = UIHostingController(rootView: Text("Third View Controller"))
+    lazy var allControllers: [UIViewController] = [firstVC, secondVC, thirdVC]
     init() {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
         view.backgroundColor = .blue
+        setViewControllers([firstVC], direction: .forward, animated: true)
+        
+        self.dataSource = self
     }
     
     required init?(coder: NSCoder) {
