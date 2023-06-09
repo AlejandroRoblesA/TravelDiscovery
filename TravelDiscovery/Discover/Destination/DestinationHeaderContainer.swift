@@ -20,7 +20,16 @@ struct DestinationHeaderContainer: UIViewControllerRepresentable {
     }
 }
 
-class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSource {
+class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    
+    func presentationCount(for pageViewController: UIPageViewController) -> Int {
+        allControllers.count
+    }
+    
+    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+        return 0
+    }
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let index = allControllers.firstIndex(of: viewController) else { return nil }
         if index == 0 { return nil }
@@ -39,11 +48,15 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     let thirdVC = UIHostingController(rootView: Text("Third View Controller"))
     lazy var allControllers: [UIViewController] = [firstVC, secondVC, thirdVC]
     init() {
+        
+        UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
+        UIPageControl.appearance().currentPageIndicatorTintColor = .red
+        
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        view.backgroundColor = .blue
         setViewControllers([firstVC], direction: .forward, animated: true)
         
         self.dataSource = self
+        self.delegate = self
     }
     
     required init?(coder: NSCoder) {
