@@ -10,10 +10,10 @@ import SwiftUI
 struct DestinationHeaderContainer: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = UIViewController
-    let imageNames: [String]
+    let imageURLString: [String]
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let pageViewController = CustomPageViewController(imageNames: imageNames)
+        let pageViewController = CustomPageViewController(imageURLString: imageURLString)
         return pageViewController
     }
 
@@ -46,13 +46,13 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     }
 
     lazy var allControllers: [UIViewController] = []
-    init(imageNames: [String]) {
+    init(imageURLString: [String]) {
         
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .red
         
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        allControllers = imageNames.map({ imageName in
+        allControllers = imageURLString.map({ imageName in
             let hostingController =
             UIHostingController(rootView:
                 KFImage(URL(string: imageName))
@@ -81,7 +81,7 @@ struct DestinationHeaderContainer_Previews: PreviewProvider {
         "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/6982cc9d-3104-4a54-98d7-45ee5d117531"
     ]
     static var previews: some View {
-        DestinationHeaderContainer(imageNames: imagesURLString)
+        DestinationHeaderContainer(imageURLString: imagesURLString)
             .frame(height: 300)
     }
 }
