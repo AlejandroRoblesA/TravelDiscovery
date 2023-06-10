@@ -6,8 +6,32 @@
 //
 
 import SwiftUI
+import Kingfisher
+
+struct RestaurantDetails: Decodable {
+    let description: String
+}
+
+class RestaurantDetailsViewModel: ObservableObject {
+    @Published var isLoading = true
+    @Published var details: RestaurantDetails?
+
+    init () {
+        let urlString = "https://travel.letsbuildthatapp.com/travel_discovery/restaurant?id=0"
+        guard let url = URL(string: urlString) else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                guard let data = data else { return }
+                self.details = try? JSONDecoder().decode(RestaurantDetails.self, from: data)
+                
+            }
+        }.resume()
+    }
+}
+
 
 struct RestaurantDetailsView: View {
+    @ObservedObject var vm = RestaurantDetailsViewModel()
     let restaurant: Restaurant
     var body: some View{
         ScrollView {
@@ -49,7 +73,7 @@ struct RestaurantDetailsView: View {
                     }
                     .foregroundColor(.orange)
                 }
-                Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+                Text(vm.details?.description ?? "")
                     .padding(.top, 8)
                     .font(.system(size: 14, weight: .regular))
             }
@@ -65,7 +89,7 @@ struct RestaurantDetailsView: View {
                 HStack(spacing: 16) {
                     ForEach(0..<5, id: \.self) { _ in
                         VStack(alignment: .leading) {
-                            Image("tapas")
+                            KFImage(URL(string: ""))
                                 .resizable()
                                 .scaledToFill()
                                 .frame(height: 80)
