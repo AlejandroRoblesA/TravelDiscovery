@@ -117,8 +117,10 @@ struct PopularDestinationsDetailsView: View {
     
     var body: some View {
         ScrollView {
-            DestinationHeaderContainer(imageURLString: vm.destinationDetails?.photos ?? [])
-                .frame(height: 250)
+            if let photos = vm.destinationDetails?.photos {
+                DestinationHeaderContainer(imageURLString: photos)
+                    .frame(height: 250)
+            }
             VStack(alignment: .leading) {
                 Text(destination.city)
                     .font(.system(size: 18, weight: .bold))
