@@ -25,7 +25,7 @@ struct PopularRestaurantsView: View {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
                     ForEach(restaurants, id: \.self) { restaurant in
-                        NavigationLink(destination: RestaurantDetailsView()) {
+                        NavigationLink(destination: RestaurantDetailsView(restaurant: restaurant)) {
                             RestaurantTile(restaurant: restaurant)
                                 .foregroundColor(Color(.label))
                         }
