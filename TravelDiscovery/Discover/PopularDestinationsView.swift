@@ -31,7 +31,7 @@ struct PopularDestinationsView: View {
                 HStack(spacing: 8) {
                     ForEach(destinations, id: \.self) { destination in
                         NavigationLink {
-                            PopularDestinationsDetailsView(destination: destination)
+                            NavigationLazyView(PopularDestinationsDetailsView(destination: destination))
                         } label: {
                             PopularDestinationTile(destination: destination)
                                 .padding(.bottom)
@@ -70,7 +70,35 @@ struct PopularDestinationTile: View {
 
 import MapKit
 
+struct DestinationDetails: Decodable {
+    let description: String
+    let photos: [String]
+}
+
+
+class DestinationDetailsViewModel: ObservableObject {
+    @Published var isLoading = true
+    @Published var destinationDetails: DestinationDetails?
+    
+    init(name: String) {
+        let urlString = "https://travel.letsbuildthatapp.com/travel_discovery/destination?name=\(name.lowercased())".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        guard let url = URL(string: urlString ) else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                // make sure to check your error and response
+                guard let data = data else { return }
+                do {
+                    self.destinationDetails = try JSONDecoder().decode(DestinationDetails.self, from: data)
+                } catch {
+                    print("Failed to decode JSON", error)
+                }
+            }
+        }.resume()
+    }
+}
+
 struct PopularDestinationsDetailsView: View {
+    @ObservedObject var vm: DestinationDetailsViewModel
     let destination: Destination
     @State var region: MKCoordinateRegion
     @State var isShowingAttractions = true
@@ -78,6 +106,7 @@ struct PopularDestinationsDetailsView: View {
     init(destination: Destination) {
         self.destination = destination
         self.region = MKCoordinateRegion(center: .init(latitude: destination.latitude, longitude: destination.longitude), span: .init(latitudeDelta: 0.07, longitudeDelta: 0.07))
+        self.vm = .init(name: destination.city)
     }
     
     let imagesURLString = [
@@ -88,8 +117,10 @@ struct PopularDestinationsDetailsView: View {
     
     var body: some View {
         ScrollView {
-            DestinationHeaderContainer(imageURLString: imagesURLString)
-                .frame(height: 250)
+            if let photos = vm.destinationDetails?.photos {
+                DestinationHeaderContainer(imageURLString: photos)
+                    .frame(height: 250)
+            }
             VStack(alignment: .leading) {
                 Text(destination.city)
                     .font(.system(size: 18, weight: .bold))
@@ -102,7 +133,7 @@ struct PopularDestinationsDetailsView: View {
                 }
                 .padding(.top, 2)
                 
-                Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.")
+                Text(vm.destinationDetails?.description ?? "")
                     .padding(.top, 4)
                     .font(.system(size: 14))
                 
