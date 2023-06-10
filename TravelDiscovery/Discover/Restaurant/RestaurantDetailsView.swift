@@ -10,6 +10,12 @@ import Kingfisher
 
 struct RestaurantDetails: Decodable {
     let description: String
+    let popularDishes: [Dish]
+}
+
+struct Dish: Decodable, Hashable {
+    let name, price, photo: String
+    let numPhotos: Int
 }
 
 class RestaurantDetailsViewModel: ObservableObject {
@@ -23,7 +29,6 @@ class RestaurantDetailsViewModel: ObservableObject {
             DispatchQueue.main.async {
                 guard let data = data else { return }
                 self.details = try? JSONDecoder().decode(RestaurantDetails.self, from: data)
-                
             }
         }.resume()
     }
@@ -87,9 +92,9 @@ struct RestaurantDetailsView: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
-                    ForEach(0..<5, id: \.self) { _ in
+                    ForEach(vm.details?.popularDishes ?? [], id: \.self) { dish in
                         VStack(alignment: .leading) {
-                            KFImage(URL(string: ""))
+                            KFImage(URL(string: dish.photo))
                                 .resizable()
                                 .scaledToFill()
                                 .frame(height: 80)
@@ -100,9 +105,9 @@ struct RestaurantDetailsView: View {
                                 )
                                 .shadow(radius: 2)
                                 .padding(.vertical, 4)
-                            Text("Japanese Tapas")
+                            Text(dish.name)
                                 .font(.system(size: 14, weight: .bold))
-                            Text("88 photos")
+                            Text("\(dish.numPhotos) photos")
                                 .foregroundColor(.gray)
                                 .font(.system(size: 12, weight: .regular))
                         }
