@@ -11,11 +11,24 @@ import Kingfisher
 struct RestaurantDetails: Decodable {
     let description: String
     let popularDishes: [Dish]
+    let photos: [String]
+    let reviews: [Review]
 }
 
 struct Dish: Decodable, Hashable {
     let name, price, photo: String
     let numPhotos: Int
+}
+
+struct Review: Decodable, Hashable {
+    let user: ReviewUser
+    let rating: Int
+    let text: String
+}
+
+struct ReviewUser: Decodable, Hashable {
+    let id: Int
+    let username, firstName, lastName, profileImage: String
 }
 
 class RestaurantDetailsViewModel: ObservableObject {
@@ -97,6 +110,21 @@ struct RestaurantDetailsView: View {
                     }
                 }
                 .padding(.horizontal)
+            }
+            HStack {
+                Text("Customer Reviews")
+                    .font(.system(size: 16, weight: .bold))
+                Spacer()
+            }
+            .padding(.horizontal)
+            if let reviews = vm.details?.reviews {
+                ForEach(reviews, id: \.self) { review in
+                    VStack {
+                        Text(review.text)
+                    }
+                    .padding(.top)
+                    .padding(.horizontal)
+                }
             }
         }
         .navigationBarTitle("Restaurant Details", displayMode: .inline)
