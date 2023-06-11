@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A918CE422A341C0000E0FA59 /* RestaurantDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A918CE412A341C0000E0FA59 /* RestaurantDetailsView.swift */; };
+		A92E032E2A3645F300CE7967 /* RestaurantPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E032D2A3645F300CE7967 /* RestaurantPhotosView.swift */; };
 		A935FA572A2D6CE90024BBCC /* PopularDestinationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A935FA562A2D6CE90024BBCC /* PopularDestinationsView.swift */; };
 		A935FA592A2D6DC50024BBCC /* PopularRestaurantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A935FA582A2D6DC50024BBCC /* PopularRestaurantsView.swift */; };
 		A935FA5B2A2D6E3F0024BBCC /* DiscoverCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A935FA5A2A2D6E3F0024BBCC /* DiscoverCategoriesView.swift */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		A918CE412A341C0000E0FA59 /* RestaurantDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailsView.swift; sourceTree = "<group>"; };
+		A92E032D2A3645F300CE7967 /* RestaurantPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPhotosView.swift; sourceTree = "<group>"; };
 		A935FA562A2D6CE90024BBCC /* PopularDestinationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularDestinationsView.swift; sourceTree = "<group>"; };
 		A935FA582A2D6DC50024BBCC /* PopularRestaurantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularRestaurantsView.swift; sourceTree = "<group>"; };
 		A935FA5A2A2D6E3F0024BBCC /* DiscoverCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCategoriesView.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				A918CE412A341C0000E0FA59 /* RestaurantDetailsView.swift */,
+				A92E032D2A3645F300CE7967 /* RestaurantPhotosView.swift */,
 			);
 			path = Restaurant;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				A9CDB85C2A2A8B5400E53E34 /* TravelDiscoveryApp.swift in Sources */,
 				A935FA602A2D6F550024BBCC /* Destination.swift in Sources */,
 				A9425A042A2FCB78008BC11C /* CategoryDetailView.swift in Sources */,
+				A92E032E2A3645F300CE7967 /* RestaurantPhotosView.swift in Sources */,
 				A9425A072A2FCC80008BC11C /* ActivityIndicatorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
