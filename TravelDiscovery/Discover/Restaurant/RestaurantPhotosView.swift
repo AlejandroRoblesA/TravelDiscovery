@@ -9,17 +9,20 @@ import SwiftUI
 
 struct RestaurantPhotosView: View {
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: [
-                GridItem(.fixed(125), spacing: 4),
-                GridItem(.fixed(125), spacing: 4),
-                GridItem(.fixed(125))
-            ], spacing: 4) {
-                ForEach(0..<14, id: \.self) { _ in
-                    Text("Placeholder")
-                        .padding()
-                        .background(Color.red)
+        GeometryReader { proxy in
+            ScrollView {
+                LazyVGrid(columns: [
+                    GridItem(.adaptive(minimum: proxy.size.width/3-4, maximum: 300), spacing: 2),
+                ], spacing: 4) {
+                    ForEach(0..<14, id: \.self) { _ in
+                        Image("tapas")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: proxy.size.width/3-3, height: proxy.size.width/3-3)
+                            .clipped()
+                    }
                 }
+                .padding(.horizontal, 2)
             }
         }
         .navigationBarTitle("All photos", displayMode: .inline)
