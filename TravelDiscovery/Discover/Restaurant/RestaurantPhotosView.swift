@@ -29,11 +29,21 @@ struct RestaurantPhotosView: View {
         "https://letsbuildthatapp-videos.s3.us-west-2.amazonaws.com/73f69749-f986-46ac-9b8b-d7b1d42bddc5"
     ]
 
+    @State var mode = "grid"
+    
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
+                Picker("TEST", selection: $mode) {
+                    Text("Grid")
+                        .tag("grid")
+                    Text("List")
+                        .tag("list")
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
                 LazyVGrid(columns: [
-                    GridItem(.adaptive(minimum: proxy.size.width/3-4, maximum: 300), spacing: 2),
+                    GridItem(.adaptive(minimum: proxy.size.width/3-4, maximum: 600), spacing: 2),
                 ], spacing: 4) {
                     ForEach(photoURLString, id: \.self) { urlString in
                         KFImage(URL(string: urlString))
