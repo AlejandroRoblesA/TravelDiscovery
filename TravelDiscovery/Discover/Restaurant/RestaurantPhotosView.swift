@@ -31,6 +31,15 @@ struct RestaurantPhotosView: View {
 
     @State var mode = "grid"
     
+    init () {
+        /// This change every UISegmentedControl in the application
+        UISegmentedControl.appearance().backgroundColor = .black
+        UISegmentedControl.appearance().selectedSegmentTintColor = .orange
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributes, for: .selected)
+        UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributes, for: .normal)
+    }
+    
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
@@ -42,18 +51,22 @@ struct RestaurantPhotosView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
-                LazyVGrid(columns: [
-                    GridItem(.adaptive(minimum: proxy.size.width/3-4, maximum: 600), spacing: 2),
-                ], spacing: 4) {
-                    ForEach(photoURLString, id: \.self) { urlString in
-                        KFImage(URL(string: urlString))
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: proxy.size.width/3-3, height: proxy.size.width/3-3)
-                            .clipped()
+                if mode == "grid" {
+                    LazyVGrid(columns: [
+                        GridItem(.adaptive(minimum: proxy.size.width/3-4, maximum: 600), spacing: 2),
+                    ], spacing: 4) {
+                        ForEach(photoURLString, id: \.self) { urlString in
+                            KFImage(URL(string: urlString))
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: proxy.size.width/3-3, height: proxy.size.width/3-3)
+                                .clipped()
+                        }
                     }
+                    .padding(.horizontal, 2)
+                } else {
+                    Text("List")
                 }
-                .padding(.horizontal, 2)
             }
         }
         .navigationBarTitle("All photos", displayMode: .inline)
