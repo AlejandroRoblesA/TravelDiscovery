@@ -91,11 +91,15 @@ struct RestaurantDetailsView: View {
                     }
                     .foregroundColor(.orange)
                 }
-                Text(vm.details?.description ?? "")
-                    .padding(.top, 8)
-                    .font(.system(size: 14, weight: .regular))
+                HStack { Spacer() }
             }
-            .padding()
+            .padding(.top)
+            .padding(.horizontal)
+            Text(vm.details?.description ?? "")
+                .padding(.top, 8)
+                .font(.system(size: 14, weight: .regular))
+                .padding(.horizontal)
+                .padding(.bottom)
             HStack {
                 Text("Popular Dishes")
                     .font(.system(size: 16, weight: .bold))
@@ -120,6 +124,27 @@ struct RestaurantDetailsView: View {
             if let reviews = vm.details?.reviews {
                 ForEach(reviews, id: \.self) { review in
                     VStack {
+                        HStack {
+                            KFImage(URL(string: review.user.profileImage))
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 44)
+                                .clipShape(Circle())
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("\(review.user.firstName) \(review.user.lastName)")
+                                    .font(.system(size: 14,weight: .bold))
+                                HStack(spacing: 4) {
+                                    ForEach(0..<5, id: \.self) { rating in
+                                        Image(systemName: "star.fill")
+                                            .foregroundColor(rating < review.rating ? .orange : .gray)
+                                            .font(.system(size: 12))
+                                    }
+                                }
+                            }
+                            Spacer()
+                            Text("Dec 2020")
+                                .font(.system(size: 14, weight: .bold))
+                        }
                         Text(review.text)
                     }
                     .padding(.top)
