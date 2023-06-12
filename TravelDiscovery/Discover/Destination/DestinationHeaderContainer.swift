@@ -62,8 +62,8 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
             return hostingController
             
         })
-        if let first = allControllers.first {
-            setViewControllers([first], direction: .forward, animated: true)
+        if selectedIndex < allControllers.count {
+            setViewControllers([allControllers[selectedIndex]], direction: .forward, animated: true)
         }
         
         
