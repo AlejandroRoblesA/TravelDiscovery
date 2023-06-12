@@ -12,9 +12,10 @@ struct DestinationHeaderContainer: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIViewController
     let imageURLString: [String]
     let isBlackBackground: Bool
+    var selectedIndex: Int = 0
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let pageViewController = CustomPageViewController(imageURLString: imageURLString, isBlackBackground: isBlackBackground)
+        let pageViewController = CustomPageViewController(imageURLString: imageURLString, isBlackBackground: isBlackBackground, selectedIndex: selectedIndex)
         return pageViewController
     }
 
@@ -31,7 +32,7 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return 0
+        return selectedIndex
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -47,8 +48,9 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     }
 
     lazy var allControllers: [UIViewController] = []
-    init(imageURLString: [String], isBlackBackground: Bool) {
-        
+    let selectedIndex: Int
+    init(imageURLString: [String], isBlackBackground: Bool, selectedIndex: Int) {
+        self.selectedIndex = selectedIndex
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .red
         
@@ -60,8 +62,8 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
             return hostingController
             
         })
-        if let first = allControllers.first {
-            setViewControllers([first], direction: .forward, animated: true)
+        if selectedIndex < allControllers.count {
+            setViewControllers([allControllers[selectedIndex]], direction: .forward, animated: true)
         }
         
         

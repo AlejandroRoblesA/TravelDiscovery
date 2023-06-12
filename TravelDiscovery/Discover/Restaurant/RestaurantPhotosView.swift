@@ -31,6 +31,7 @@ struct RestaurantPhotosView: View {
 
     @State var mode = "grid"
     @State var shouldShowFullscreenModal = false
+    @State var selectedPhotoIndex = 0
     
     init () {
         /// This change every UISegmentedControl in the application
@@ -56,7 +57,7 @@ struct RestaurantPhotosView: View {
                     .fullScreenCover(isPresented: $shouldShowFullscreenModal) {
                         ZStack(alignment: .topLeading) {
                             Color.black.ignoresSafeArea()
-                            DestinationHeaderContainer(imageURLString: photoURLString, isBlackBackground: true)
+                            DestinationHeaderContainer(imageURLString: photoURLString, isBlackBackground: true, selectedIndex: selectedPhotoIndex)
                             Button {
                                 shouldShowFullscreenModal.toggle()
                             } label: {
@@ -67,12 +68,14 @@ struct RestaurantPhotosView: View {
                             }
                         }
                     }
+                    .opacity(shouldShowFullscreenModal ? 1 : 0)
                 if mode == "grid" {
                     LazyVGrid(columns: [
                         GridItem(.adaptive(minimum: proxy.size.width/3-4, maximum: 600), spacing: 2),
                     ], spacing: 4) {
                         ForEach(photoURLString, id: \.self) { urlString in
                             Button {
+                                self.selectedPhotoIndex = photoURLString.firstIndex(of: urlString) ?? 0
                                 shouldShowFullscreenModal.toggle()
                             } label: {
                                 KFImage(URL(string: urlString))
