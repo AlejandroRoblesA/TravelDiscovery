@@ -55,9 +55,12 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         allControllers = imageURLString.map({ imageName in
             let hostingController =
             UIHostingController(rootView:
-                KFImage(URL(string: imageName))
-                .resizable()
-                .scaledToFill()
+                ZStack {
+                    Color.black
+                    KFImage(URL(string: imageName))
+                    .resizable()
+                    .scaledToFit()
+                }
             )
             hostingController.view.clipsToBounds = true
             return hostingController
