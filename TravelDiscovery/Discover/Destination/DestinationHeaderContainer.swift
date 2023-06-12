@@ -11,9 +11,10 @@ struct DestinationHeaderContainer: UIViewControllerRepresentable {
     
     typealias UIViewControllerType = UIViewController
     let imageURLString: [String]
+    let isBlackBackground: Bool
     
     func makeUIViewController(context: Context) -> UIViewController {
-        let pageViewController = CustomPageViewController(imageURLString: imageURLString)
+        let pageViewController = CustomPageViewController(imageURLString: imageURLString, isBlackBackground: isBlackBackground)
         return pageViewController
     }
 
@@ -46,7 +47,7 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     }
 
     lazy var allControllers: [UIViewController] = []
-    init(imageURLString: [String]) {
+    init(imageURLString: [String], isBlackBackground: Bool) {
         
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.systemGray5
         UIPageControl.appearance().currentPageIndicatorTintColor = .red
@@ -54,11 +55,7 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
         allControllers = imageURLString.map({ imageName in
             let hostingController =
-            UIHostingController(rootView:
-                KFImage(URL(string: imageName))
-                .resizable()
-                .scaledToFill()
-            )
+            UIHostingController(rootView: CarouselCustomBackground(imageName: imageName, isBlackBackground: isBlackBackground))
             hostingController.view.clipsToBounds = true
             return hostingController
             
@@ -77,6 +74,25 @@ class CustomPageViewController: UIPageViewController, UIPageViewControllerDataSo
     }
 }
 
+struct CarouselCustomBackground: View {
+    let imageName: String
+    let isBlackBackground: Bool
+    var body: some View {
+        if isBlackBackground {
+            ZStack {
+                Color.black
+                KFImage(URL(string: imageName))
+                    .resizable()
+                    .scaledToFit()
+            }
+        } else {
+            KFImage(URL(string: imageName))
+                .resizable()
+                .scaledToFill()
+        }
+    }
+}
+
 struct DestinationHeaderContainer_Previews: PreviewProvider {
     static let imagesURLString = [
         "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/2240d474-2237-4cd3-9919-562cd1bb439e",
@@ -84,7 +100,7 @@ struct DestinationHeaderContainer_Previews: PreviewProvider {
         "https://letsbuildthatapp-videos.s3-us-west-2.amazonaws.com/6982cc9d-3104-4a54-98d7-45ee5d117531"
     ]
     static var previews: some View {
-        DestinationHeaderContainer(imageURLString: imagesURLString)
+        DestinationHeaderContainer(imageURLString: imagesURLString, isBlackBackground: false)
             .frame(height: 300)
     }
 }

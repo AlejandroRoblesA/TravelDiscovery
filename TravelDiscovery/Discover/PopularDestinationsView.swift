@@ -118,7 +118,7 @@ struct PopularDestinationsDetailsView: View {
     var body: some View {
         ScrollView {
             if let photos = vm.destinationDetails?.photos {
-                DestinationHeaderContainer(imageURLString: photos)
+                DestinationHeaderContainer(imageURLString: photos, isBlackBackground: false)
                     .frame(height: 250)
             }
             VStack(alignment: .leading) {
