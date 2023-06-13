@@ -8,7 +8,38 @@
 import SwiftUI
 import Kingfisher
 
+struct UserDetails: Decodable {
+    let username, firstName, profileImage: String
+    let followers, following: Int
+    let posts: [Post]
+}
+
+struct Post: Decodable, Hashable {
+    let title, imageUrl, views: String
+    let hashtags: [String]
+}
+
+class UserDetailsViewModel: ObservableObject {
+    
+    @Published var userDetails: UserDetails?
+    
+    init() {
+        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/user?id=0") else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                guard let data = data else { return }
+                do {
+                    self.userDetails = try JSONDecoder().decode(UserDetails.self, from: data)
+                } catch let jsonError {
+                    print("Decoding failed for UserDetails:", jsonError)
+                }
+            }
+        }.resume()
+    }
+}
+
 struct UserDetailsView: View {
+    @ObservedObject var vm = UserDetailsViewModel()
     let user: User
     var body: some View {
         ScrollView {
