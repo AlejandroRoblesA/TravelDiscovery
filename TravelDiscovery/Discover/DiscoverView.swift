@@ -39,7 +39,7 @@ struct DiscoverView: View {
                                startPoint: .top,
                                endPoint: .center)
                     .ignoresSafeArea()
-                Color.discoverBackground
+                Color.defaultBackground
                     .offset(y: 400)
                 ScrollView {
                     HStack {
@@ -59,7 +59,7 @@ struct DiscoverView: View {
                         PopularRestaurantsView()
                         TrendingCreatorsView()
                     }
-                    .background(Color.discoverBackground)
+                    .background(Color.defaultBackground)
                     .cornerRadius(16)
                     .padding(.top, 32)
                 }
@@ -72,5 +72,8 @@ struct DiscoverView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         DiscoverView()
+            .colorScheme(.dark)
+        DiscoverView()
+            .colorScheme(.light)
     }
 }
