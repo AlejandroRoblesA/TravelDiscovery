@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct UserDetailsView: View {
     let user: User
@@ -79,7 +80,7 @@ struct UserDetailsView: View {
                 
                 ForEach(0..<10, id: \.self) { _ in
                     VStack(alignment: .leading) {
-                        Image("japan")
+                        KFImage(URL(string: "https://letsbuildthatapp-videos.s3.us-west-2.amazonaws.com/4aff5261-6cea-49ad-a541-cb70b7f13ed3"))
                             .resizable()
                             .scaledToFill()
                             .frame(height: 200)
@@ -106,7 +107,7 @@ struct UserDetailsView: View {
                                     .font(.system(size: 14, weight: .semibold))
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 4)
-                                    .background(Color(.init(red: 50/255, green: 150/255, blue: 255/255, alpha: 0.2)))
+                                    .background(Color(.init(red: 50/255, green: 150/255, blue: 255/255, alpha: 0.15)))
                                     .cornerRadius(20)
                             }
                         }
