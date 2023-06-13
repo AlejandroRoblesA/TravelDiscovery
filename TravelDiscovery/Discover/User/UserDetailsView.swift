@@ -8,8 +8,43 @@
 import SwiftUI
 import Kingfisher
 
+struct UserDetails: Decodable {
+    let username, firstName, lastName, profileImage: String
+    let followers, following: Int
+    let posts: [Post]
+}
+
+struct Post: Decodable, Hashable {
+    let title, imageUrl, views: String
+    let hashtags: [String]
+}
+
+class UserDetailsViewModel: ObservableObject {
+    
+    @Published var userDetails: UserDetails?
+    
+    init(userId: Int) {
+        guard let url = URL(string: "https://travel.letsbuildthatapp.com/travel_discovery/user?id=\(userId)") else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            DispatchQueue.main.async {
+                guard let data = data else { return }
+                do {
+                    self.userDetails = try JSONDecoder().decode(UserDetails.self, from: data)
+                } catch let jsonError {
+                    print("Decoding failed for UserDetails:", jsonError)
+                }
+            }
+        }.resume()
+    }
+}
+
 struct UserDetailsView: View {
+    @ObservedObject var vm: UserDetailsViewModel
     let user: User
+    init(user: User) {
+        self.user = user
+        self.vm = .init(userId: user.id)
+    }
     var body: some View {
         ScrollView {
             VStack(spacing: 12) {
@@ -20,11 +55,11 @@ struct UserDetailsView: View {
                     .clipShape(Circle())
                     .shadow(radius: 10)
                     .padding(.top)
-                Text("Amy Adams")
+                Text("\(self.vm.userDetails?.firstName ?? "" ) \(self.vm.userDetails?.lastName ?? "" )")
                     .font(.system(size: 14, weight: .semibold))
                 
                 HStack {
-                    Text("@amyadams20 •")
+                    Text("@\(self.vm.userDetails?.username ?? "") •")
                     Image(systemName: "hand.thumbsup.fill")
                         .font(.system(size: 10, weight: .semibold))
                     Text("2541")
@@ -37,7 +72,7 @@ struct UserDetailsView: View {
                 
                 HStack(spacing: 12) {
                     VStack {
-                        Text("59,394")
+                        Text("\(vm.userDetails?.followers ?? 0)")
                             .font(.system(size: 13, weight: .semibold))
                         Text("Followers")
                             .font(.system(size: 9, weight: .regular))
@@ -46,7 +81,7 @@ struct UserDetailsView: View {
                         .frame(width: 0.5, height: 12)
                         .background(Color(.lightGray))
                     VStack {
-                        Text("2,112")
+                        Text("\(vm.userDetails?.following ?? 0)")
                             .font(.system(size: 13, weight: .semibold))
                         Text("Following")
                             .font(.system(size: 9, weight: .regular))
@@ -78,33 +113,33 @@ struct UserDetailsView: View {
                 }
                 .font(.system(size: 12, weight: .semibold))
                 
-                ForEach(0..<10, id: \.self) { _ in
+                ForEach(vm.userDetails?.posts ?? [], id: \.self) { post in
                     VStack(alignment: .leading) {
-                        KFImage(URL(string: "https://letsbuildthatapp-videos.s3.us-west-2.amazonaws.com/4aff5261-6cea-49ad-a541-cb70b7f13ed3"))
+                        KFImage(URL(string: post.imageUrl))
                             .resizable()
                             .scaledToFill()
                             .frame(height: 200)
                             .clipped()
                         HStack {
-                            Image("amy")
+                            Image(user.imageName)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 34)
                                 .clipShape(Circle())
                             VStack(alignment: .leading) {
-                                Text("Here is my post title")
+                                Text(post.title)
                                     .font(.system(size: 14, weight: .semibold))
-                                Text("500k views")
+                                Text("\(post.views) views")
                                     .font(.system(size: 12, weight: .regular))
                                     .foregroundColor(.gray)
                             }
                         }
                         .padding(.horizontal, 8)
                         HStack {
-                            ForEach(0..<3, id: \.self) { _ in
-                                Text("#Traveling")
+                            ForEach(post.hashtags, id: \.self) { hashtag in
+                                Text("#\(hashtag)")
                                     .foregroundColor(Color.blue)
-                                    .font(.system(size: 14, weight: .semibold))
+                                    .font(.system(size: 13, weight: .semibold))
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 4)
                                     .background(Color(.init(red: 50/255, green: 150/255, blue: 255/255, alpha: 0.15)))
@@ -128,7 +163,7 @@ struct UserDetailsView: View {
 struct UserDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            UserDetailsView(user: .init(name: "Amy Adams", imageName: "amy"))
+            UserDetailsView(user: .init(id: 0, name: "Amy Adams", imageName: "amy"))
         }
     }
 }
