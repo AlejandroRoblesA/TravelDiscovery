@@ -8,5 +8,6 @@
 import SwiftUI
 
 extension Color {
-    static let discoverBackground = Color(.init(white: 0.95, alpha: 1))
+    static let defaultBackground = Color("defaultBackground")
+    static let tileBackground = Color("tileBackground")
 }

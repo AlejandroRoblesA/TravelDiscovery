@@ -23,7 +23,6 @@ struct DiscoverView: View {
             .foregroundColor: UIColor.white
         ]
     }
-    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         NavigationView {
             ZStack {
@@ -40,7 +39,7 @@ struct DiscoverView: View {
                                startPoint: .top,
                                endPoint: .center)
                     .ignoresSafeArea()
-                Color.discoverBackground
+                Color.defaultBackground
                     .offset(y: 400)
                 ScrollView {
                     HStack {
@@ -60,7 +59,7 @@ struct DiscoverView: View {
                         PopularRestaurantsView()
                         TrendingCreatorsView()
                     }
-                    .background(colorScheme == .light ? Color.discoverBackground : .black)
+                    .background(Color.defaultBackground)
                     .cornerRadius(16)
                     .padding(.top, 32)
                 }
