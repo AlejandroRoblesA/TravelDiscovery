@@ -36,7 +36,6 @@ struct DiscoverCategoriesView: View {
                         }
                         .frame(width: 68)
                     }
-
                 }
             }
             .padding(.horizontal)
