@@ -20,15 +20,7 @@ struct CategoryDetailView: View {
 
     var body: some View {
         if vm.isLoading {
-            VStack {
-                ActivityIndicatorView()
-                Text("Loading...")
-                    .foregroundColor(.white)
-                    .font(.system(size: 16, weight: .semibold))
-            }
-            .padding()
-            .background(Color.black)
-            .cornerRadius(8)
+            CategoryDetailLoadingView()
         } else {
             ZStack {
                 if !vm.errorMessage.isEmpty {
