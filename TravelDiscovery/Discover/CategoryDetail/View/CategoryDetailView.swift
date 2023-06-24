@@ -24,12 +24,7 @@ struct CategoryDetailView: View {
         } else {
             ZStack {
                 if !vm.errorMessage.isEmpty {
-                    VStack(spacing: 12) {
-                        Image(systemName: "xmark.octagon.fill")
-                            .font(.system(size: 64, weight: .semibold))
-                            .foregroundColor(.red)
-                        Text(vm.errorMessage)
-                    }
+                    CategoryDetailErrorView(errorMessage: vm.errorMessage)
                 }
                 ScrollView {
                     ForEach(vm.places, id: \.self) { place in
