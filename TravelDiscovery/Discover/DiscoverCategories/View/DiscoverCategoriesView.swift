@@ -22,19 +22,7 @@ struct DiscoverCategoriesView: View {
                     NavigationLink {
                         NavigationLazyView(CategoryDetailView(name: category.name))
                     } label: {
-                        VStack(spacing: 8) {
-                            Image(systemName: category.imageName)
-                                .font(.system(size: 20))
-                                .foregroundColor(Color.orange)
-                                .frame(width: 64, height: 64)
-                                .background(Color.white)
-                                .cornerRadius(.infinity)
-                            Text(category.name)
-                                .font(.system(size: 12, weight: .semibold))
-                                .multilineTextAlignment(.center)
-                                .foregroundColor(.white)
-                        }
-                        .frame(width: 68)
+                        DiscoverCategoriesImageAndLabelView(image: category.imageName, title: category.name)
                     }
                 }
             }
