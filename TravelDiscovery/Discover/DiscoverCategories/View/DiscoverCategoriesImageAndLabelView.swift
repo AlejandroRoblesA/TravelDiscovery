@@ -29,6 +29,11 @@ struct DiscoverCategoriesImageAndLabelView: View {
 
 struct DiscoverCategoriesImageAndLabelView_Previews: PreviewProvider {
     static var previews: some View {
-        DiscoverCategoriesImageAndLabelView(image: "paintpalette.fill", title: "Art")
+        NavigationView {
+            ZStack {
+                Color.orange
+                DiscoverCategoriesImageAndLabelView(image: "paintpalette.fill", title: "Art")
+            }
+        }
     }
 }
