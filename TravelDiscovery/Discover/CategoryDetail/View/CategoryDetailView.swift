@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import Kingfisher
-import SDWebImageSwiftUI
 
 struct CategoryDetailView: View {
     private let name: String
@@ -28,16 +26,7 @@ struct CategoryDetailView: View {
                 }
                 ScrollView {
                     ForEach(vm.places, id: \.self) { place in
-                        VStack(alignment: .leading, spacing: 0) {
-                            KFImage(URL(string: place.thumbnail))
-                                .resizable()
-                                .scaledToFill()
-                            Text(place.name)
-                                .font(.system(size: 12, weight: .semibold))
-                                .padding()
-                        }
-                        .asTile()
-                        .padding()
+                        CategoryDetailCardView(place: place)
                     }
                 }
             }
