@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A90FA32D2A4683A1005D86ED /* DiscoverCategoriesImageAndLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90FA32C2A4683A1005D86ED /* DiscoverCategoriesImageAndLabelView.swift */; };
+		A90FA3312A4685C5005D86ED /* CategoryDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90FA3302A4685C5005D86ED /* CategoryDetailViewModel.swift */; };
 		A918CE422A341C0000E0FA59 /* RestaurantDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A918CE412A341C0000E0FA59 /* RestaurantDetailsView.swift */; };
 		A92E032E2A3645F300CE7967 /* RestaurantPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E032D2A3645F300CE7967 /* RestaurantPhotosView.swift */; };
 		A92E03312A37CA2900CE7967 /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92E03302A37CA2900CE7967 /* UserDetailsView.swift */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		A90FA32C2A4683A1005D86ED /* DiscoverCategoriesImageAndLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverCategoriesImageAndLabelView.swift; sourceTree = "<group>"; };
+		A90FA3302A4685C5005D86ED /* CategoryDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailViewModel.swift; sourceTree = "<group>"; };
 		A918CE412A341C0000E0FA59 /* RestaurantDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailsView.swift; sourceTree = "<group>"; };
 		A92E032D2A3645F300CE7967 /* RestaurantPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantPhotosView.swift; sourceTree = "<group>"; };
 		A92E03302A37CA2900CE7967 /* UserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
@@ -98,6 +100,22 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		A90FA32E2A46858B005D86ED /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A9425A032A2FCB78008BC11C /* CategoryDetailView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A90FA32F2A468599005D86ED /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A90FA3302A4685C5005D86ED /* CategoryDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		A918CE402A341BDE00E0FA59 /* Restaurant */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,10 +138,10 @@
 			children = (
 				A9CDB85D2A2A8B5400E53E34 /* DiscoverView.swift */,
 				A90FA3282A4680E5005D86ED /* DiscoverCategories */,
+				A9425A052A2FCBE4008BC11C /* CategoryDetail */,
 				A92E032F2A37CA1D00CE7967 /* User */,
 				A918CE402A341BDE00E0FA59 /* Restaurant */,
 				A99DA15C2A3297E500BF3C38 /* Destination */,
-				A9425A052A2FCBE4008BC11C /* Category */,
 				A935FA5C2A2D6ED40024BBCC /* TrendingCreatorsView.swift */,
 				A935FA582A2D6DC50024BBCC /* PopularRestaurantsView.swift */,
 				A935FA562A2D6CE90024BBCC /* PopularDestinationsView.swift */,
@@ -151,12 +169,13 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		A9425A052A2FCBE4008BC11C /* Category */ = {
+		A9425A052A2FCBE4008BC11C /* CategoryDetail */ = {
 			isa = PBXGroup;
 			children = (
-				A9425A032A2FCB78008BC11C /* CategoryDetailView.swift */,
+				A90FA32E2A46858B005D86ED /* View */,
+				A90FA32F2A468599005D86ED /* ViewModel */,
 			);
-			path = Category;
+			path = CategoryDetail;
 			sourceTree = "<group>";
 		};
 		A99DA15C2A3297E500BF3C38 /* Destination */ = {
@@ -289,6 +308,7 @@
 				A935FA662A2D6F8D0024BBCC /* Category.swift in Sources */,
 				A935FA572A2D6CE90024BBCC /* PopularDestinationsView.swift in Sources */,
 				A935FA5D2A2D6ED40024BBCC /* TrendingCreatorsView.swift in Sources */,
+				A90FA3312A4685C5005D86ED /* CategoryDetailViewModel.swift in Sources */,
 				A918CE422A341C0000E0FA59 /* RestaurantDetailsView.swift in Sources */,
 				A92E03312A37CA2900CE7967 /* UserDetailsView.swift in Sources */,
 				A935FA592A2D6DC50024BBCC /* PopularRestaurantsView.swift in Sources */,
