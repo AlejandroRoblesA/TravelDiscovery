@@ -33,6 +33,6 @@ struct PopularDestinationTile: View {
 
 struct PopularDestinationTile_Previews: PreviewProvider {
     static var previews: some View {
-        PopularDestinationTile(destination: .init(city: "Paris", country: "France", imageName: "eiffel_tower", latitude: 48.859565, longitude: 2.353235))
+        PopularDestinationTile(destination: Destination.MOCK_DESTINATIONS[0])
     }
 }
