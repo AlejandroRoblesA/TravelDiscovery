@@ -156,9 +156,9 @@
 				A9CDB85D2A2A8B5400E53E34 /* DiscoverView.swift */,
 				A90FA3282A4680E5005D86ED /* DiscoverCategories */,
 				A9425A052A2FCBE4008BC11C /* CategoryDetail */,
+				A99DA15C2A3297E500BF3C38 /* PopularDestinations */,
 				A92E032F2A37CA1D00CE7967 /* User */,
 				A918CE402A341BDE00E0FA59 /* Restaurant */,
-				A99DA15C2A3297E500BF3C38 /* Destination */,
 				A935FA5C2A2D6ED40024BBCC /* TrendingCreatorsView.swift */,
 				A935FA582A2D6DC50024BBCC /* PopularRestaurantsView.swift */,
 				A935FA562A2D6CE90024BBCC /* PopularDestinationsView.swift */,
@@ -195,12 +195,12 @@
 			path = CategoryDetail;
 			sourceTree = "<group>";
 		};
-		A99DA15C2A3297E500BF3C38 /* Destination */ = {
+		A99DA15C2A3297E500BF3C38 /* PopularDestinations */ = {
 			isa = PBXGroup;
 			children = (
 				A99DA15D2A3297F600BF3C38 /* DestinationHeaderContainer.swift */,
 			);
-			path = Destination;
+			path = PopularDestinations;
 			sourceTree = "<group>";
 		};
 		A9CDB84F2A2A8B5400E53E34 = {
