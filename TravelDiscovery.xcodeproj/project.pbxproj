@@ -184,6 +184,7 @@
 		A92049A82A4CB93900252829 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A935FA5F2A2D6F550024BBCC /* Destination.swift */,
 				A92049AC2A4CBA0900252829 /* DestinationsDetails.swift */,
 				A92049B42A4CBBF600252829 /* Attraction.swift */,
 			);
@@ -226,7 +227,6 @@
 		A935FA5E2A2D6F250024BBCC /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A935FA5F2A2D6F550024BBCC /* Destination.swift */,
 				A935FA612A2D6F740024BBCC /* Restaurant.swift */,
 				A935FA632A2D6F800024BBCC /* User.swift */,
 			);
