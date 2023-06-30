@@ -1,20 +1,20 @@
 # TravelDiscovery
-This project was taken from https://www.letsbuildthatapp.com/courses/SwiftUI%20Mastery%20Travel%20Discovery web page, and it was rewritten by me, refactoring some files, avoiding boilerplate code, following best practices.
+This repository was created following the tutorial that you can find in [Letsbuildthatapp](https://www.letsbuildthatapp.com/courses/SwiftUI%20Mastery%20Travel%20Discovery) web page.
+It was rewritten by me, refactoring some files, avoiding boilerplate code, following best practices and adding new features that in the tutorial you are not going to find.
+If you want to see how it was written you can visit the [Pull Requests](https://github.com/AlejandroRoblesA/TravelDiscovery/pulls?page=2&q=is%3Apr+is%3Aclosed) created for this repository.
 
-## 01. Navigation View,  Scroll View and Stacking
-https://github.com/AlejandroRoblesA/TravelDiscovery/assets/51420842/e6904d6a-3dd3-49e7-b21a-1e4963e13542
 
-## 02. ForEach Hashable and System Images
-https://github.com/AlejandroRoblesA/TravelDiscovery/assets/51420842/5ce7bab3-116d-4ebc-baf4-2fe4ee5a83bc
+### Main View
+https://github.com/AlejandroRoblesA/TravelDiscovery/assets/51420842/dbdca2a6-c575-4fe5-865f-ad51cd893596
 
-## 03. Destinations Row Images And Sizing
-https://github.com/AlejandroRoblesA/TravelDiscovery/assets/51420842/56abd0b8-714f-4d5c-a95a-fd18a7486697
+### Discover Categories
+https://github.com/AlejandroRoblesA/TravelDiscovery/assets/51420842/eb7f1bce-44fb-4392-a294-43dc4debf968
 
-## 04. Restaurants And Trending Creators
-https://github.com/AlejandroRoblesA/TravelDiscovery/assets/51420842/cb3f9f02-b0ab-4a6a-a224-a5c82862a76f
+### Popular Destionations
+https://github.com/AlejandroRoblesA/TravelDiscovery/assets/51420842/7ef5791d-142c-4e1f-b487-e27750e2b5ce
 
-## 05. Linear Gradients And  ZStack Layers
-https://github.com/AlejandroRoblesA/TravelDiscovery/assets/51420842/6fa67419-6274-4cc9-a01d-ed2b99bc9084
+### Popular Restaurants
+https://github.com/AlejandroRoblesA/TravelDiscovery/assets/51420842/e1f46c13-f021-45b3-8f33-cd2cdcf12327
 
-## 06. Project Clean Up And File Organization
-N/A
+### Trending Creators
+https://github.com/AlejandroRoblesA/TravelDiscovery/assets/51420842/6b05409f-198b-4b9c-b1b1-126517b954e9
